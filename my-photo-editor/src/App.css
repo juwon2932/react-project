@@ -32,29 +32,7 @@
   from {
     transform: rotate(0deg);
   }
-
   to {
     transform: rotate(360deg);
   }
-}
-
-/* 사이드바 메뉴 스타일 */
-.MuiDrawer-paper {
-  background-color: #f9f9f9 !important;
-  border-left: 1px solid #ddd !important;
-}
-
-/* 사이드바 텍스트 스타일 */
-.MuiListItemText-root {
-  font-weight: bold !important;
-  color: #555 !important;
-  padding: 10px 0 !important;
-}
-
-/* 전체 레이아웃 조정 */
-body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
 }

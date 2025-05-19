@@ -1,0 +1,382 @@
+-- --------------------------------------------------------
+-- 호스트:                          127.0.0.1
+-- 서버 버전:                        8.0.41 - MySQL Community Server - GPL
+-- 서버 OS:                        Win64
+-- HeidiSQL 버전:                  12.10.0.7000
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+-- 테이블 project.tbl_bookmark 구조 내보내기
+CREATE TABLE IF NOT EXISTS `tbl_bookmark` (
+  `BOOKMARK_ID` int NOT NULL AUTO_INCREMENT,
+  `USER_ID` varchar(50) NOT NULL,
+  `FEED_ID` int NOT NULL,
+  `NOTE` varchar(255) DEFAULT NULL,
+  `TAGS` varchar(255) DEFAULT NULL,
+  `IS_ARCHIVED` tinyint(1) DEFAULT '0',
+  `CATEGORY` varchar(50) DEFAULT NULL,
+  `CREATED_AT` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`BOOKMARK_ID`),
+  KEY `USER_ID` (`USER_ID`),
+  KEY `FEED_ID` (`FEED_ID`),
+  CONSTRAINT `tbl_bookmark_ibfk_1` FOREIGN KEY (`USER_ID`) REFERENCES `tbl_user` (`USER_ID`) ON DELETE CASCADE,
+  CONSTRAINT `tbl_bookmark_ibfk_2` FOREIGN KEY (`FEED_ID`) REFERENCES `tbl_feed` (`FEED_ID`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 project.tbl_chat 구조 내보내기
+CREATE TABLE IF NOT EXISTS `tbl_chat` (
+  `CHAT_ID` int NOT NULL AUTO_INCREMENT,
+  `USER_1` varchar(50) NOT NULL,
+  `USER_2` varchar(50) NOT NULL,
+  `CREATED_AT` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`CHAT_ID`),
+  KEY `USER_1` (`USER_1`),
+  KEY `USER_2` (`USER_2`),
+  CONSTRAINT `tbl_chat_ibfk_1` FOREIGN KEY (`USER_1`) REFERENCES `tbl_user` (`USER_ID`) ON DELETE CASCADE,
+  CONSTRAINT `tbl_chat_ibfk_2` FOREIGN KEY (`USER_2`) REFERENCES `tbl_user` (`USER_ID`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 project.tbl_comment 구조 내보내기
+CREATE TABLE IF NOT EXISTS `tbl_comment` (
+  `COMMENT_ID` int NOT NULL AUTO_INCREMENT,
+  `PARENT_ID` int DEFAULT NULL,
+  `FEED_ID` int NOT NULL,
+  `USER_ID` varchar(50) NOT NULL,
+  `CONTENT` text NOT NULL,
+  `LIKES_COUNT` int DEFAULT '0',
+  `IS_EDITED` tinyint(1) DEFAULT '0',
+  `MENTIONED_USERS` varchar(255) DEFAULT NULL,
+  `CREATED_AT` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `PARENT_COMMENT_ID` int DEFAULT NULL,
+  PRIMARY KEY (`COMMENT_ID`),
+  KEY `FEED_ID` (`FEED_ID`),
+  KEY `USER_ID` (`USER_ID`),
+  KEY `FK_PARENT_COMMENT` (`PARENT_COMMENT_ID`),
+  CONSTRAINT `FK_PARENT_COMMENT` FOREIGN KEY (`PARENT_COMMENT_ID`) REFERENCES `tbl_comment` (`COMMENT_ID`) ON DELETE CASCADE,
+  CONSTRAINT `tbl_comment_ibfk_1` FOREIGN KEY (`FEED_ID`) REFERENCES `tbl_feed` (`FEED_ID`) ON DELETE CASCADE,
+  CONSTRAINT `tbl_comment_ibfk_2` FOREIGN KEY (`USER_ID`) REFERENCES `tbl_user` (`USER_ID`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 project.tbl_comment_like 구조 내보내기
+CREATE TABLE IF NOT EXISTS `tbl_comment_like` (
+  `COMMENT_ID` int NOT NULL,
+  `USER_ID` varchar(50) NOT NULL,
+  `CREATED_AT` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`COMMENT_ID`,`USER_ID`),
+  KEY `USER_ID` (`USER_ID`),
+  CONSTRAINT `tbl_comment_like_ibfk_1` FOREIGN KEY (`COMMENT_ID`) REFERENCES `tbl_comment` (`COMMENT_ID`) ON DELETE CASCADE,
+  CONSTRAINT `tbl_comment_like_ibfk_2` FOREIGN KEY (`USER_ID`) REFERENCES `tbl_user` (`USER_ID`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 project.tbl_donation 구조 내보내기
+CREATE TABLE IF NOT EXISTS `tbl_donation` (
+  `DONATION_ID` int NOT NULL AUTO_INCREMENT,
+  `FROM_USER` varchar(50) NOT NULL,
+  `TO_USER` varchar(50) NOT NULL,
+  `FEED_ID` int NOT NULL,
+  `AMOUNT` int DEFAULT NULL,
+  `CREATED_AT` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`DONATION_ID`),
+  KEY `FROM_USER` (`FROM_USER`),
+  KEY `TO_USER` (`TO_USER`),
+  KEY `FEED_ID` (`FEED_ID`),
+  CONSTRAINT `tbl_donation_ibfk_1` FOREIGN KEY (`FROM_USER`) REFERENCES `tbl_user` (`USER_ID`) ON DELETE CASCADE,
+  CONSTRAINT `tbl_donation_ibfk_2` FOREIGN KEY (`TO_USER`) REFERENCES `tbl_user` (`USER_ID`) ON DELETE CASCADE,
+  CONSTRAINT `tbl_donation_ibfk_3` FOREIGN KEY (`FEED_ID`) REFERENCES `tbl_feed` (`FEED_ID`) ON DELETE CASCADE,
+  CONSTRAINT `tbl_donation_chk_1` CHECK ((`AMOUNT` in (100,300,500)))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 project.tbl_feed 구조 내보내기
+CREATE TABLE IF NOT EXISTS `tbl_feed` (
+  `FEED_ID` int NOT NULL AUTO_INCREMENT,
+  `USER_ID` varchar(50) NOT NULL,
+  `TITLE` text NOT NULL,
+  `CONTENTS` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `PROFILE_TYPE` enum('REAL','NICK') DEFAULT 'NICK',
+  `VIEWS` int DEFAULT '0',
+  `IS_PINNED` tinyint(1) DEFAULT '0',
+  `LIKES_COUNT` int DEFAULT '0',
+  `COMMENTS_COUNT` int DEFAULT '0',
+  `SHARE_COUNT` int DEFAULT '0',
+  `TAG_IDS` varchar(255) DEFAULT NULL,
+  `CREATED_AT` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `UPDATED_AT` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`FEED_ID`),
+  KEY `USER_ID` (`USER_ID`),
+  CONSTRAINT `tbl_feed_ibfk_1` FOREIGN KEY (`USER_ID`) REFERENCES `tbl_user` (`USER_ID`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 project.tbl_feed_hashtag 구조 내보내기
+CREATE TABLE IF NOT EXISTS `tbl_feed_hashtag` (
+  `FEED_ID` int NOT NULL,
+  `TAG_ID` int NOT NULL,
+  PRIMARY KEY (`FEED_ID`,`TAG_ID`),
+  KEY `fk_tag_id` (`TAG_ID`),
+  CONSTRAINT `fk_feed_id` FOREIGN KEY (`FEED_ID`) REFERENCES `tbl_feed` (`FEED_ID`) ON DELETE CASCADE,
+  CONSTRAINT `fk_tag_id` FOREIGN KEY (`TAG_ID`) REFERENCES `tbl_hashtag` (`TAG_ID`) ON DELETE CASCADE,
+  CONSTRAINT `tbl_feed_hashtag_ibfk_1` FOREIGN KEY (`FEED_ID`) REFERENCES `tbl_feed` (`FEED_ID`) ON DELETE CASCADE,
+  CONSTRAINT `tbl_feed_hashtag_ibfk_2` FOREIGN KEY (`TAG_ID`) REFERENCES `tbl_hashtag` (`TAG_ID`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 project.tbl_feed_img 구조 내보내기
+CREATE TABLE IF NOT EXISTS `tbl_feed_img` (
+  `IMG_ID` int NOT NULL AUTO_INCREMENT,
+  `FEED_ID` int NOT NULL,
+  `IMG_URL` varchar(255) NOT NULL,
+  `CREATED_AT` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`IMG_ID`),
+  KEY `FEED_ID` (`FEED_ID`),
+  CONSTRAINT `tbl_feed_img_ibfk_1` FOREIGN KEY (`FEED_ID`) REFERENCES `tbl_feed` (`FEED_ID`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 project.tbl_feed_reaction 구조 내보내기
+CREATE TABLE IF NOT EXISTS `tbl_feed_reaction` (
+  `REACTION_ID` int NOT NULL AUTO_INCREMENT,
+  `FEED_ID` int NOT NULL,
+  `USER_ID` varchar(50) NOT NULL,
+  `REACTION_TYPE` enum('LIKE','LOVE','HAHA','SAD','ANGRY') NOT NULL,
+  `CREATED_AT` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`REACTION_ID`),
+  KEY `FEED_ID` (`FEED_ID`),
+  KEY `USER_ID` (`USER_ID`),
+  CONSTRAINT `tbl_feed_reaction_ibfk_1` FOREIGN KEY (`FEED_ID`) REFERENCES `tbl_feed` (`FEED_ID`) ON DELETE CASCADE,
+  CONSTRAINT `tbl_feed_reaction_ibfk_2` FOREIGN KEY (`USER_ID`) REFERENCES `tbl_user` (`USER_ID`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 project.tbl_follow 구조 내보내기
+CREATE TABLE IF NOT EXISTS `tbl_follow` (
+  `FOLLOWER_ID` varchar(50) NOT NULL,
+  `FOLLOWEE_ID` varchar(50) NOT NULL,
+  `CREATED_AT` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`FOLLOWER_ID`,`FOLLOWEE_ID`),
+  KEY `FK_FOLLOW_FOLLOWEE` (`FOLLOWEE_ID`),
+  CONSTRAINT `FK_FOLLOW_FOLLOWEE` FOREIGN KEY (`FOLLOWEE_ID`) REFERENCES `tbl_user` (`USER_ID`) ON DELETE CASCADE,
+  CONSTRAINT `FK_FOLLOW_FOLLOWER` FOREIGN KEY (`FOLLOWER_ID`) REFERENCES `tbl_user` (`USER_ID`) ON DELETE CASCADE,
+  CONSTRAINT `tbl_follow_ibfk_1` FOREIGN KEY (`FOLLOWER_ID`) REFERENCES `tbl_user` (`USER_ID`) ON DELETE CASCADE,
+  CONSTRAINT `tbl_follow_ibfk_2` FOREIGN KEY (`FOLLOWEE_ID`) REFERENCES `tbl_user` (`USER_ID`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 project.tbl_hashtag 구조 내보내기
+CREATE TABLE IF NOT EXISTS `tbl_hashtag` (
+  `TAG_ID` int NOT NULL AUTO_INCREMENT,
+  `TAG_NAME` varchar(100) NOT NULL,
+  `CREATED_AT` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`TAG_ID`),
+  UNIQUE KEY `TAG_NAME` (`TAG_NAME`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 project.tbl_like 구조 내보내기
+CREATE TABLE IF NOT EXISTS `tbl_like` (
+  `FEED_ID` int NOT NULL,
+  `USER_ID` varchar(50) NOT NULL,
+  `CREATED_AT` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`FEED_ID`,`USER_ID`),
+  KEY `USER_ID` (`USER_ID`),
+  CONSTRAINT `tbl_like_ibfk_1` FOREIGN KEY (`FEED_ID`) REFERENCES `tbl_feed` (`FEED_ID`) ON DELETE CASCADE,
+  CONSTRAINT `tbl_like_ibfk_2` FOREIGN KEY (`USER_ID`) REFERENCES `tbl_user` (`USER_ID`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 project.tbl_message 구조 내보내기
+CREATE TABLE IF NOT EXISTS `tbl_message` (
+  `MESSAGE_ID` int NOT NULL AUTO_INCREMENT,
+  `CHAT_ID` int NOT NULL,
+  `SENDER_ID` varchar(50) NOT NULL,
+  `CONTENT` text NOT NULL,
+  `REACTION_COUNT` int DEFAULT '0',
+  `IS_EDITED` tinyint(1) DEFAULT '0',
+  `CREATED_AT` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `READ_AT` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`MESSAGE_ID`),
+  KEY `CHAT_ID` (`CHAT_ID`),
+  KEY `SENDER_ID` (`SENDER_ID`),
+  CONSTRAINT `tbl_message_ibfk_1` FOREIGN KEY (`CHAT_ID`) REFERENCES `tbl_chat` (`CHAT_ID`) ON DELETE CASCADE,
+  CONSTRAINT `tbl_message_ibfk_2` FOREIGN KEY (`SENDER_ID`) REFERENCES `tbl_user` (`USER_ID`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 project.tbl_message_reaction 구조 내보내기
+CREATE TABLE IF NOT EXISTS `tbl_message_reaction` (
+  `REACTION_ID` int NOT NULL AUTO_INCREMENT,
+  `MESSAGE_ID` int NOT NULL,
+  `USER_ID` varchar(50) NOT NULL,
+  `REACTION_TYPE` enum('LIKE','LAUGH','HEART','WOW') NOT NULL,
+  `CREATED_AT` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`REACTION_ID`),
+  KEY `MESSAGE_ID` (`MESSAGE_ID`),
+  KEY `USER_ID` (`USER_ID`),
+  CONSTRAINT `tbl_message_reaction_ibfk_1` FOREIGN KEY (`MESSAGE_ID`) REFERENCES `tbl_message` (`MESSAGE_ID`) ON DELETE CASCADE,
+  CONSTRAINT `tbl_message_reaction_ibfk_2` FOREIGN KEY (`USER_ID`) REFERENCES `tbl_user` (`USER_ID`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 project.tbl_notification 구조 내보내기
+CREATE TABLE IF NOT EXISTS `tbl_notification` (
+  `NOTIFICATION_ID` int NOT NULL AUTO_INCREMENT,
+  `USER_ID` varchar(50) NOT NULL,
+  `TYPE` enum('LIKE','COMMENT','FOLLOW','DONATION','VISIT','MESSAGE') NOT NULL,
+  `CONTENT` text NOT NULL,
+  `IS_READ` tinyint(1) DEFAULT '0',
+  `URL` varchar(255) DEFAULT NULL,
+  `IMAGE_URL` varchar(255) DEFAULT NULL,
+  `CREATED_AT` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `READ_AT` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`NOTIFICATION_ID`),
+  KEY `USER_ID` (`USER_ID`),
+  CONSTRAINT `tbl_notification_ibfk_1` FOREIGN KEY (`USER_ID`) REFERENCES `tbl_user` (`USER_ID`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 project.tbl_report 구조 내보내기
+CREATE TABLE IF NOT EXISTS `tbl_report` (
+  `REPORT_ID` int NOT NULL AUTO_INCREMENT,
+  `REPORTER_ID` varchar(50) NOT NULL,
+  `TARGET_USER_ID` varchar(50) NOT NULL,
+  `FEED_ID` int DEFAULT NULL,
+  `COMMENT_ID` int DEFAULT NULL,
+  `REASON` text NOT NULL,
+  `STATUS` enum('PENDING','RESOLVED','REJECTED') DEFAULT 'PENDING',
+  `CREATED_AT` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `UPDATED_AT` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`REPORT_ID`),
+  KEY `REPORTER_ID` (`REPORTER_ID`),
+  KEY `TARGET_USER_ID` (`TARGET_USER_ID`),
+  KEY `FEED_ID` (`FEED_ID`),
+  KEY `COMMENT_ID` (`COMMENT_ID`),
+  CONSTRAINT `tbl_report_ibfk_1` FOREIGN KEY (`REPORTER_ID`) REFERENCES `tbl_user` (`USER_ID`) ON DELETE CASCADE,
+  CONSTRAINT `tbl_report_ibfk_2` FOREIGN KEY (`TARGET_USER_ID`) REFERENCES `tbl_user` (`USER_ID`) ON DELETE CASCADE,
+  CONSTRAINT `tbl_report_ibfk_3` FOREIGN KEY (`FEED_ID`) REFERENCES `tbl_feed` (`FEED_ID`) ON DELETE CASCADE,
+  CONSTRAINT `tbl_report_ibfk_4` FOREIGN KEY (`COMMENT_ID`) REFERENCES `tbl_comment` (`COMMENT_ID`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 project.tbl_shorts 구조 내보내기
+CREATE TABLE IF NOT EXISTS `tbl_shorts` (
+  `SHORTS_ID` int NOT NULL AUTO_INCREMENT,
+  `USER_ID` varchar(50) NOT NULL,
+  `TITLE` varchar(255) NOT NULL,
+  `VIDEO_URL` varchar(255) NOT NULL,
+  `THUMBNAIL_URL` varchar(255) DEFAULT NULL,
+  `VIEWS` int DEFAULT '0',
+  `CREATED_AT` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`SHORTS_ID`),
+  KEY `USER_ID` (`USER_ID`),
+  CONSTRAINT `tbl_shorts_ibfk_1` FOREIGN KEY (`USER_ID`) REFERENCES `tbl_user` (`USER_ID`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 project.tbl_temp_feed 구조 내보내기
+CREATE TABLE IF NOT EXISTS `tbl_temp_feed` (
+  `TEMP_FEED_ID` int NOT NULL AUTO_INCREMENT,
+  `USER_ID` varchar(50) NOT NULL,
+  `CAPTION` text NOT NULL,
+  `PROFILE_TYPE` enum('REAL','NICK') DEFAULT 'NICK',
+  `VIEWS` int DEFAULT '0',
+  `CREATED_AT` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `EXPIRE_AT` timestamp NOT NULL,
+  PRIMARY KEY (`TEMP_FEED_ID`),
+  KEY `USER_ID` (`USER_ID`),
+  CONSTRAINT `tbl_temp_feed_ibfk_1` FOREIGN KEY (`USER_ID`) REFERENCES `tbl_user` (`USER_ID`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 project.tbl_user 구조 내보내기
+CREATE TABLE IF NOT EXISTS `tbl_user` (
+  `USER_ID` varchar(50) NOT NULL,
+  `EMAIL` varchar(100) NOT NULL,
+  `PASSWORD` varchar(255) NOT NULL,
+  `REAL_NAME` varchar(50) DEFAULT NULL,
+  `GENDER` enum('MALE','FEMALE','OTHER') DEFAULT NULL,
+  `BIRTHDATE` date DEFAULT NULL,
+  `PHONE` varchar(20) DEFAULT NULL,
+  `SOCIAL_LINKS` varchar(255) DEFAULT NULL,
+  `REPUTATION` int DEFAULT '0',
+  `NICKNAME` varchar(30) NOT NULL,
+  `PROFILE_IMG` varchar(255) DEFAULT NULL,
+  `INTRO` varchar(255) DEFAULT NULL,
+  `REGION` varchar(100) DEFAULT NULL,
+  `VISIT_COUNT` int DEFAULT '0',
+  `STATUS` enum('ACTIVE','INACTIVE','DELETED') DEFAULT 'ACTIVE',
+  `CREATED_AT` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `UPDATED_AT` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `LAST_LOGIN` timestamp NULL DEFAULT NULL,
+  `IS_VERIFIED` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`USER_ID`),
+  UNIQUE KEY `EMAIL` (`EMAIL`),
+  UNIQUE KEY `NICKNAME` (`NICKNAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 project.tbl_user_block 구조 내보내기
+CREATE TABLE IF NOT EXISTS `tbl_user_block` (
+  `BLOCK_ID` int NOT NULL AUTO_INCREMENT,
+  `BLOCKER_ID` varchar(50) NOT NULL,
+  `BLOCKED_ID` varchar(50) NOT NULL,
+  `CREATED_AT` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`BLOCK_ID`),
+  KEY `BLOCKER_ID` (`BLOCKER_ID`),
+  KEY `BLOCKED_ID` (`BLOCKED_ID`),
+  CONSTRAINT `tbl_user_block_ibfk_1` FOREIGN KEY (`BLOCKER_ID`) REFERENCES `tbl_user` (`USER_ID`) ON DELETE CASCADE,
+  CONSTRAINT `tbl_user_block_ibfk_2` FOREIGN KEY (`BLOCKED_ID`) REFERENCES `tbl_user` (`USER_ID`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 project.tbl_view_history 구조 내보내기
+CREATE TABLE IF NOT EXISTS `tbl_view_history` (
+  `VIEW_ID` int NOT NULL AUTO_INCREMENT,
+  `USER_ID` varchar(50) NOT NULL,
+  `FEED_ID` int NOT NULL,
+  `VIEWED_AT` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`VIEW_ID`),
+  KEY `USER_ID` (`USER_ID`),
+  KEY `FEED_ID` (`FEED_ID`),
+  CONSTRAINT `tbl_view_history_ibfk_1` FOREIGN KEY (`USER_ID`) REFERENCES `tbl_user` (`USER_ID`) ON DELETE CASCADE,
+  CONSTRAINT `tbl_view_history_ibfk_2` FOREIGN KEY (`FEED_ID`) REFERENCES `tbl_feed` (`FEED_ID`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
