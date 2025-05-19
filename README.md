@@ -1,4 +1,4 @@
-![우리 로고](readmeimg/logo.png)
+<img src="readmeimg/logo.png" alt="로고" width="200" />
 # SNS 프로젝트
 
 ## 프로젝트 소개
