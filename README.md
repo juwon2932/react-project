@@ -10,8 +10,30 @@ React를 활용해 로그인, 회원가입 기능 및 CRUD로 일상을 기록�
 2025.05.03 ~ 2025.05.19
 
 ## 사용 기술  
-- 언어: JavaScript (React, Node.js)  
-- 툴: Visual Studio Code, HeidiSQL  
+### 🚀 Frontend
+<p>
+  <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white"/>
+  <img src="https://img.shields.io/badge/JavaScript (ES6%2B)-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"/>
+  <img src="https://img.shields.io/badge/React Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white"/>
+  <img src="https://img.shields.io/badge/MUI-007FFF?style=for-the-badge&logo=mui&logoColor=white"/>
+  <img src="https://img.shields.io/badge/react--slick-000000?style=for-the-badge&logo=react&logoColor=white"/>
+</p>
+
+### 🛠 Backend
+<p>
+  <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white"/>
+  <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white"/>
+  <img src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Socket.IO-010101?style=for-the-badge&logo=socket.io&logoColor=white"/>
+</p>
+
+### 🧰 기타
+<p>
+  <img src="https://img.shields.io/badge/Multer-333333?style=for-the-badge&logo=npm&logoColor=white"/>
+  <img src="https://img.shields.io/badge/bcrypt-004C7F?style=for-the-badge&logo=keybase&logoColor=white"/>
+  <img src="https://img.shields.io/badge/dayjs-EF4035?style=for-the-badge&logo=javascript&logoColor=white"/>
+</p>
 
 ## 주요 기능 및 화면 설명  
 
