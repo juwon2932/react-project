@@ -1,3 +1,4 @@
+(readmeimg/logo.png)
 # SNS 프로젝트
 
 ## 프로젝트 소개
