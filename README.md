@@ -15,31 +15,35 @@ React를 활용해 로그인, 회원가입 기능 및 CRUD로 일상을 기록�
 
 ## 주요 기능 및 화면 설명  
 
-<img src="readmeimg//login.png" alt="로그인 화면" width="800" />
+<img src="readmeimg/login.png" alt="로그인 화면" width="800" />
 
 1. **로그인 / 로그아웃**  
 - 아이디, 비밀번호 유효성 검사 구현  
 - 로그인 성공 시 세션 부여  
 
-<img src="readmeimg//mypage.png" alt="마이페이지" width="800" />
+<img src="readmeimg/join.png" alt="회원가입 화면" width="800" />
 
 2. **회원가입**  
 - 아이디 중복 여부 체크  
 - 모든 항목 입력 시 회원가입 가능  
 
+<img src="readmeimg/main.png" alt="메인 화면" width="800" />
+
 3. **홈 화면**  
 - 가입한 회원들이 작성한 게시글과 사진 표시  
-- 댓글 작성 기능 구현  
+- 댓글 작성 기능 구현
 
-4. **내 프로필**  
-- 작성한 글 목록 확인 가능  
+<img src="readmeimg/mypage.png" alt="마이페이지" width="800" />
 
-5. **프로필 수정**  
+4. **내 프로필/프로필 수정**  
+- 작성한 글 목록 확인 가능   
 - 프로필 사진 첨부 및 수정 기능  
 - 프로필 내용 수정 기능  
 
+<img src="readmeimg/Register.png" alt="글쓰기" width="800" />
+
 6. **글 작성**  
-- 게시글 작성 기능 (사진 첨부 포함)  
+- 게시글 작성 기능 (사진/영상 첨부 포함)  
 
 7. **DB 연결**  
 - Node.js Express 서버와 MySQL DB 연결  
