@@ -1,4 +1,4 @@
-<img src="readmeimg/pull.mp4" alt="영상" width="800" />
+<img src="readmeimg/pull.gif" alt="영상" width="800" />
 # SNS 프로젝트
 
 ## 프로젝트 소개
