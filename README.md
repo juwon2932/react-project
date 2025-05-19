@@ -93,7 +93,7 @@ React의 빠른 렌더링 장점을 체감했고, DB 연결과 파일 업로드 
 
 
 <div align="center" style="margin: 60px 0 20px 0;">
-  <a href="https://juwon2932.github.io/intro/" target="_blank" style="text-decoration: none;">
+  <a href="https://juwon2932.github.io/intro/index.html" target="_blank" style="text-decoration: none;">
     <img src="https://img.shields.io/badge/%F0%9F%91%A8%20juwon2932%20Developer%20Profile-000000?style=for-the-badge&logo=github&logoColor=white" alt="Developer Profile" />
   </a>
   <br/>
