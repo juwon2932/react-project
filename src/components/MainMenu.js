@@ -52,7 +52,7 @@ export default function MainMenu({ openPixoEditor }) {
 
     const menuItems = [
         { text: '메인', icon: <Home size={20} />, path: '/feed' },
-        { text: '주변', icon: <MapPin size={20} />, path: '/explore' },
+        // { text: '주변', icon: <MapPin size={20} />, path: '/explore' },
         { text: '글쓰기', icon: <PlusCircle size={20} />, path: '/upload' },
         { text: '쇼츠', icon: <VideoIcon size={20} />, path: '/shorts' },
         { text: '메세지', icon: <Bell size={20} />, path: '/messages' },

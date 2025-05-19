@@ -29,10 +29,11 @@ const io = new Server(server, {
 
 app.use(express.json());
 
+app.use('/uploads', express.static(__dirname + '/uploads'));
 // 📁 정적 파일 설정
 app.use('/uploads/profile', express.static(path.join(__dirname, 'uploads/profile')));
 app.use('/uploads/posts', express.static(path.join(__dirname, 'uploads/posts')));
-app.use('/uploads/shorts', express.static(path.join(__dirname, 'uploads/shorts')));
+app.use('/uploads/shorts', express.static(path.join(__dirname, 'uploads/vidoes')));
 
 // 📁 CORS 설정 (필요한 도메인만 허용)
 app.use(cors({

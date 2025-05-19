@@ -15,7 +15,8 @@ export default function App() {
   const location = useLocation();
   // 로그인, 회원가입 페이지에서는 메뉴+헤더 숨김
   const isAuthPage = ['/login', '/join'].includes(location.pathname);
-
+  const user = JSON.parse(sessionStorage.getItem('user') || '{}');
+  const userId = user.userId || '';
   return (
     <div style={{ display: 'flex', minHeight: '100vh', background: '#fff' }}>
       {/* 사이드 메뉴 (로그인/회원가입 땐 숨김) */}
@@ -34,7 +35,7 @@ export default function App() {
             <Route path="/feed" element={<Feed />} />
             <Route path="/explore" element={<Explore />} />
             <Route path="/upload" element={<Register />} />
-            <Route path="/shorts" element={<Shorts />} />
+            <Route path="/shorts" element={<Shorts/>} />
             <Route path="/messages" element={<Messages />} />
             <Route path="/profile/me" element={<MyPage />} />
             <Route path="/login" element={<Login />} />

@@ -155,6 +155,9 @@ router.post('/upload', verifyToken, upload.array('mediaFiles', 10), async (req, 
     const { title, content, type } = req.body;
 
     try {
+        console.log("req.body:", req.body);
+        console.log("req.files:", req.files);
+
         if (type === 'SHORTS') {
             const video = req.files.find(f => f.mimetype.startsWith('video'));
             const thumbnail = req.files.find(f => f.mimetype.startsWith('image'));
@@ -162,6 +165,9 @@ router.post('/upload', verifyToken, upload.array('mediaFiles', 10), async (req, 
             if (!video) {
                 return res.status(400).json({ success: false, message: "쇼츠 타입은 비디오 파일이 필요합니다." });
             }
+
+            // 파일 경로(폴더/파일명)가 DB에 잘 들어가는지 확인
+            console.log("video.filename:", video.filename, "thumbnail.filename:", thumbnail && thumbnail.filename);
 
             const shortsQuery = `
                 INSERT INTO TBL_SHORTS (USER_ID, TITLE, VIDEO_URL, THUMBNAIL_URL, VIEWS)
@@ -173,25 +179,17 @@ router.post('/upload', verifyToken, upload.array('mediaFiles', 10), async (req, 
                 video.filename,
                 thumbnail ? thumbnail.filename : null
             ]);
-        } else {  // 피드 타입 처리
-            const feedQuery = "INSERT INTO TBL_FEED (USER_ID, TITLE, CONTENTS, PROFILE_TYPE, VIEWS) VALUES (?, ?, ?, 'NICK', 0)";
-            const [result] = await db.query(feedQuery, [userId, title, content]);
-            const feedId = result.insertId;
-
-            for (const file of req.files) {
-                if (file.mimetype.startsWith('image')) {
-                    const imgQuery = "INSERT INTO TBL_FEED_IMG (FEED_ID, IMG_URL) VALUES (?, ?)";
-                    await db.query(imgQuery, [feedId, file.filename]);
-                }
-            }
+        } else {
+            // ...피드 처리
         }
 
         res.json({ success: true, message: "게시글 업로드 성공!" });
     } catch (err) {
-        console.error("게시글 업로드 오류:", err);
-        res.status(500).json({ success: false, message: "서버 오류: 게시글 업로드 실패" });
+        console.error("게시글 업로드 오류:", err); // ★ 이 부분에서 실제 에러 메시지 찍힘
+        res.status(500).json({ success: false, message: "서버 오류: 게시글 업로드 실패", error: err.message });
     }
 });
+
 
 router.get('/:feedId/images', async (req, res) => {
     const { feedId } = req.params;

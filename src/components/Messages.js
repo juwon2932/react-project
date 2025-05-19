@@ -153,9 +153,17 @@ export default function Messages() {
                         >
                             <ListItemAvatar>
                                 <Avatar
-                                    src={f.PROFILE_IMG && f.PROFILE_IMG.trim() !== "" ? `http://localhost:3005${f.PROFILE_IMG}` : undefined}
+                                    src={
+                                        f.PROFILE_IMG && f.PROFILE_IMG.trim() !== ""
+                                            ? (
+                                                f.PROFILE_IMG.startsWith("/")
+                                                    ? `http://localhost:3005${f.PROFILE_IMG}`
+                                                    : `http://localhost:3005/uploads/profile/${f.PROFILE_IMG}`
+                                            )
+                                            : "http://localhost:3005/uploads/profile/default-profile.png"
+                                    }
                                 >
-                                    {!f.PROFILE_IMG && f.NICKNAME?.charAt(0)}
+                                    {(!f.PROFILE_IMG || f.PROFILE_IMG.trim() === "") && f.NICKNAME?.charAt(0)}
                                 </Avatar>
                             </ListItemAvatar>
                             <ListItemText
@@ -171,9 +179,24 @@ export default function Messages() {
             <Box sx={{ flexGrow: 1, display: "flex", flexDirection: "column", p: 2, minWidth: 0 }}>
                 {selectedUser ? (
                     <>
-                        <Typography variant="h6" gutterBottom sx={{ fontWeight: 700, mb: 1 }}>
-                            {selectedUser.NICKNAME} 님과 대화
-                        </Typography>
+
+                        <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+                            <Avatar
+                                src={
+                                    selectedUser.PROFILE_IMG && selectedUser.PROFILE_IMG.trim() !== ""
+                                        ? (selectedUser.PROFILE_IMG.startsWith("/")
+                                            ? `http://localhost:3005${selectedUser.PROFILE_IMG}`
+                                            : `http://localhost:3005/uploads/profile/${selectedUser.PROFILE_IMG}`)
+                                        : "http://localhost:3005/uploads/profile/default-profile.png"
+                                }
+                                sx={{ width: 48, height: 48, mr: 1.5 }}
+                            >
+                                {selectedUser.NICKNAME ? selectedUser.NICKNAME.charAt(0) : "?"}
+                            </Avatar>
+                            <Typography variant="h6" sx={{ fontWeight: 700 }}>
+                                {selectedUser.NICKNAME} 님과 대화
+                            </Typography>
+                        </Box>
                         <Box
                             ref={scrollRef}
                             sx={{
