@@ -32,7 +32,6 @@ React를 활용해 로그인, 회원가입 기능 및 CRUD로 일상을 기록�
 <p>
   <img src="https://img.shields.io/badge/Multer-333333?style=for-the-badge&logo=npm&logoColor=white"/>
   <img src="https://img.shields.io/badge/bcrypt-004C7F?style=for-the-badge&logo=keybase&logoColor=white"/>
-  <img src="https://img.shields.io/badge/dayjs-EF4035?style=for-the-badge&logo=javascript&logoColor=white"/>
 </p>
 
 ## 주요 기능 및 화면 설명  
