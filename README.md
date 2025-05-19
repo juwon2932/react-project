@@ -1,4 +1,4 @@
-<img src="readmeimg/logo.png" alt="로고" width="200" />
+<img src="readmeimg/pull.mp4" alt="영상" width="800" />
 # SNS 프로젝트
 
 ## 프로젝트 소개
