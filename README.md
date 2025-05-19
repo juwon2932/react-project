@@ -1,70 +1,46 @@
-# Getting Started with Create React App
+# SNS 프로젝트
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 프로젝트 소개
 
-## Available Scripts
+SNS 사이트를 만드는 개인 프로젝트를 진행했습니다.  
+React를 활용해 로그인, 회원가입 기능 및 CRUD로 일상을 기록할 수 있는 웹 사이트를 만들었습니다.
 
-In the project directory, you can run:
+## 개발 기간  
+2024.04.03 ~ 2024.04.11
 
-### `npm start`
+## 사용 기술  
+- 언어: JavaScript (React, Node.js)  
+- 툴: Visual Studio Code, HeidiSQL  
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 주요 기능 및 화면 설명  
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+1. **로그인 / 로그아웃**  
+- 아이디, 비밀번호 유효성 검사 구현  
+- 로그인 성공 시 세션 부여  
 
-### `npm test`
+2. **회원가입**  
+- 아이디 중복 여부 체크  
+- 모든 항목 입력 시 회원가입 가능  
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+3. **홈 화면**  
+- 가입한 회원들이 작성한 게시글과 사진 표시  
+- 댓글 작성 기능 구현  
 
-### `npm run build`
+4. **내 프로필**  
+- 작성한 글 목록 확인 가능  
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+5. **프로필 수정**  
+- 프로필 사진 첨부 및 수정 기능  
+- 프로필 내용 수정 기능  
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+6. **글 작성**  
+- 게시글 작성 기능 (사진 첨부 포함)  
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+7. **DB 연결**  
+- Node.js Express 서버와 MySQL DB 연결  
+- 파일 업로드 구현  
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 프로젝트 후기  
+짧은 학습 및 개발 기간이 아쉬웠지만, 기존 경험을 바탕으로 기본 CRUD 기능을 빠르게 구현할 수 있었습니다.  
+React의 빠른 렌더링 장점을 체감했고, DB 연결과 파일 업로드 같은 기능도 직접 설계하여 완성할 수 있었습니다.  
+앞으로 React를 더 공부해서 추가 기능을 개발해보고 싶습니다.
